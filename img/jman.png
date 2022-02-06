@@ -1,0 +1,14 @@
+--2022-01-25 00:34:34--  https://www.mobygames.com/images/covers/l/187828-the-journeyman-project-macintosh-front-cover.jpg
+Resolving www.mobygames.com (www.mobygames.com)... 104.26.7.242, 104.26.6.242, 172.67.70.94, ...
+Connecting to www.mobygames.com (www.mobygames.com)|104.26.7.242|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 201700 (197K) [image/jpeg]
+Saving to: ‘187828-the-journeyman-project-macintosh-front-cover.jpg’
+
+     0K .......... .......... .......... .......... .......... 25% 12,7M 0s
+    50K .......... .......... .......... .......... .......... 50% 9,82M 0s
+   100K .......... .......... .......... .......... .......... 76% 11,5M 0s
+   150K .......... .......... .......... .......... ......    100% 11,9M=0,02s
+
+2022-01-25 00:34:34 (11,4 MB/s) - ‘187828-the-journeyman-project-macintosh-front-cover.jpg’ saved [201700/201700]
+

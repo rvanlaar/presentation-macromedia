@@ -1,40 +1,290 @@
 <!doctype html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>reveal.js</title>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<link rel="stylesheet" href="dist/reset.css">
-		<link rel="stylesheet" href="dist/reveal.css">
-		<link rel="stylesheet" href="dist/theme/black.css">
+	<title>MacroMedia Director in ScummVM</title>
 
-		<!-- Theme used for syntax highlighted code -->
-		<link rel="stylesheet" href="plugin/highlight/monokai.css">
-	</head>
-	<body>
-		<div class="reveal">
-			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
-			</div>
+	<link rel="stylesheet" href="dist/reset.css">
+	<link rel="stylesheet" href="dist/reveal.css">
+	<link rel="stylesheet" href="dist/theme/black.css">
+
+	<!-- Theme used for syntax highlighted code -->
+	<link rel="stylesheet" href="plugin/highlight/monokai.css">
+</head>
+
+<body>
+	<div class="reveal">
+		<div class="slides">
+			<section>
+				<h2>Testing MacroMedia Director in ScummVM</h2>
+				<p>Roland van Laar</p>
+				<p>Like to remove frustration</p>
+				<p>
+					<small>
+						twitter: <a href="https://twitter.com/@rvanlaar">@rvanlaar</a>
+					</small>
+					<small>github:
+						<a href="https://github.com/rvanlaar">rvanlaar</a>
+					</small>
+				</p>
+			</section>
+			<section data-background-image="img/room-7-flower-safe.jpg" data-background-size="contain">
+				<aside class="notes">
+					The game safecracker started it all.
+					Safecracker is a game in which you enter a mansion and try to crack all the safes.
+					The safes contain hints to crack other safes, untill you find the last one.
+					The last one contains a contract to work for the safe designing company.
+
+					I wanted to replay this game. It worked on a VM, and I was playing the game.
+					The one thing that didn't work was that when I wanted to scroll. Scrolling was way to fast.
+					I had to drop the VMs assigned CPU speed.
+					That led me on a chase. Was there any way to actually play this game in the way it was meant to.
+				</aside>
+			</section>
+			<section>
+				<section>
+					<img src="img/Made_With_Macromedia-logo.png" />
+					<img src="img/Made_with_Macromedia_logo_1997.svg" />
+				</section>
+				<section data-background-image="img/warlock.gif" data-background-size="contain"></section>
+				<section data-background-image="img/jman.jpg" data-background-size="contain"></section>
+				<section data-background-image="img/chopsuey.png" data-background-size="contain">
+					<aside class="notes">There's a whole list of director games on the scummVM wiki</aside>
+				</section>
+			</section>
+			<section>
+				<section data-background-image="img/scummvm_logo.svg" data-background-size="contain"></section>
+				<section>
+					<h1>ScummVM</h1>
+					<p>Started 20 years ago</p>
+					<aside class="notes">Monkey island, indiana jones and the fate of atlantis, loom, myst, riven
+					</aside>
+				</section>
+				<section data-background-image="img/monkey_dos_en_1_1_full.png" data-background-size="contain">
+				</section>
+				<section data-background-image="img/mystme_win_de_1_1_full.png" data-background-size="contain">
+				</section>
+				<section data-background-image="img/grim_win_en_1_2_full.png" data-background-size="contain"></section>
+			</section>
+			<section>
+				<h2>Macromedia Director</h2>
+				<p>Defacto standard for multimedia creation in the 90s</p>
+				<p class="fragment">The webplayer is known as shockwave</p>
+				<ul class="fragment">
+					<li>'90 D2.0</li>
+					<li>'91 D3.0</li>
+					<li>'94 D4.0 &lt-- support up to here (for now)</li>
+					<li>'96 D5.0</li>
+					<li>'97 D6.0</li>
+					<li>'98 D7.0</li>
+				</ul>
+				<p class="fragment">Later bought by Adobe, now discontinued</p>
+			</section>
+			<section>
+				<h2>Overview ScummVM</h2>
+				<p>C++</p>
+				<p>/engines</p>
+				<p>/common</p>
+				<p>/backends</p>
+			</section>
+			<section>
+				<h2>/backends</h2>
+				<p>Supports all major platforms</p>
+				<p>and a whole lot of minor ones</p>
+				<p>PS3, Dreamcast, Nintendo Gamecube, etc...</p>
+			</section>
+			<section>
+				<h2>/engines</h2>
+				<p>scumm, cryo, lastexpress, mohawk, director</p>
+			</section>
+			<section data-background-image="img/director.png" data-background-size="contain">
+				<aside class="notes">Shown are the score, cast, the stage and the playback</aside>
+			</section>
+			<section>
+				<h2>Lingo</h2>
+				<pre>
+					<code data-trim data-noescape>
+						on exitFrame
+							global s
+							if length(s) > 11 then
+								set s to ">>"
+								set the text of cast "weapfield" to s
+							end if
+							go(marker(0))
+						end 
+					</code>
+				  </pre>
+			</section>
+			<section>
+				<pre><code data-trim data-noescape class="hljs cpp">
+					void LB::b_length(int nargs) {
+						Datum d = g_lingo->pop();
+						TYPECHECK(d, STRING);
+				
+						Common::U32String src = d.asString().decode(Common::kUtf8);
+						int res = src.size();
+						g_lingo->push(res);
+					}</code></pre>
+			</section>
+			<section>
+				<section>
+					<h2>Working on</h2>
+				</section>
+				<section data-background-image="img/majestic-poker.png" data-background-size="contain"></section>
+				<section><img src="img/majestic-card-assets.png" />
+					<aside class="notes">The background is black, is shown as transparent</aside>
+				</section>
+				<section>
+					<pre><code data-trim data-noescape>
+						diff --git a/graphics.cpp b/graphics.cpp
+						index f5100e4a7a9..beaaba2fae6 100644
+						--- a/engines/director/graphics.cpp
+						+++ b/engines/director/graphics.cpp
+						@@ -313,8 +313,7 @@ void DirectorPlotData::setApplyColor() {
+								}
+						 
+								if (backColor != colorWhite) {
+						-               if (ink != kInkTypeTransparent &&
+						-                               ink != kInkTypeNotTrans)
+						+               if (ink != kInkTypeTransparent && 
+						+					ink != kInkTypeNotTrans && 
+						+					ink != kInkTypeBackgndTrans)
+												applyColor = true;					
+					</code></pre>
+				</section>
+				<section data-background-image="img/majestic-poker-done.png" data-background-size="contain">
+					<aside class="notes">Text is missing a shadow</aside>
+				</section>
+			</section>
+
+			<section>
+				<h2>Waking up</h2>
+				<pre><code data-trim data-noescape>
+					WARNING: Replaced score name with: \
+						DATA/NAV/A1 REACTOR (from SS Warlock:DATA:NAV:A1 REACTOR)!
+					WARNING: STUB: restartLingo()!
+
+					Thread 1 "scummvm" received signal SIGSEGV, \
+						Segmentation fault.
+					0x00005555555d24fa in Director::DirectorEngine::\
+						openMainArchive (this=0x55555654c180, movie=...)
+						at engines/director/resource.cpp:64
+				</code></pre>
+			</section>
+			<section>
+				<h2>First tests</h2>
+				<pre>
+					<code data-trim data-noescape>
+				function scummvmtests 
+					for movie in (cat ../auto-run/dictionary4/all_files.txt)
+						echo $movie; ./scummvm --debugflags=runfirstframes -p ../auto-run/dictionary4/ --start-movie=$movie workshop >output/$movie.txt 2>&1 ; 	
+						if test $status -eq 0
+							echo $movie >> output/passed.txt
+						else
+							echo $movie >> output/failed.txt
+						end
+					end
+				end
+					</code>
+					</pre>
+				<aside class="notes">This was the first iteration of the tests. This was a huge help to identify issues
+				</aside>
+			</section>
+			<section>
+				<h2>Drawbacks</h2>
+				<p>it beeped</p>
+				<p>it displays output</p>
+				<p>each program had to be closed</p>
+			</section>
+			<section>
+				<h2>Solutions</h2>
+				<p>SDL_AUDIODRIVER=dummy</p>
+				<p>SDL_VIDEODRIVER=dummy</p>
+				<p>--debugflags=runfirstframes</p>
+				<aside class="notes">PR for the runfirstframes debugflag: https://github.com/scummvm/scummvm/pull/2180
+				</aside>
+			</section>
+			<section>
+				<section>
+					<h2>Inspiration</h2>
+				</section>
+				<section data-background-image="img/dolphin-ci.png" data-background-size="contain">
+					<aside class="notes">Dolphin's fifo.ci shows the new image on the left, the previous commit on the
+						right and the difference in the middle</aside>
+				</section>
+			</section>
+			<section>
+				<section>
+					<h2>Buildbot</h2>
+					<p><a href="https://john.scummvm.org">Director Buildbot</a></p>
+				</section>
+				<section data-background-image="img/buildbot-run.png" data-background-size="contain"></section>
+				<section data-background-image="img/buildbot-chop-suey.png" data-background-size="contain">
+					<aside class="notes">Here we can see what happens when a run fails, the output is saved</aside>
+				</section>
+				<section>
+					<img src="img/buildbot-discord.png" />
+					<aside class="notes">Here's what it looks like in our Discord</aside>
+				</section>
+			</section>
+			<section>
+				<section>
+
+				</section>
+				<section>
+					<h2>Technical Challenges</h2>
+					<p class="fragment">Twisted: Async from the '00s</p>
+					<p class="fragment">Performance, but it's async right?</p>
+					<aside class="notes">Difference for us is that we have tests to pass, instead of writing code and
+						tests in unison.
+						Some API endpoints take a long time to fetch all the data since the last green build (never)
+						We've split Buildbot up.</aside>
+				</section>
+				<section data-background-image="img/buildbot-masters.png" data-background-size="contain">
+					<aside class="notes">
+						I worked on setting up the buildbot, first locally, make it work, then
+						externally on another server.
+						It has grown to two masters, two uis, running with pypy.
+					</aside>
+				</section>
+			</section>
+			<section>
+				<h2>Organisational</h2>
+				<p>Show, don't tell</p>
+				<p>Give quick feedback</p>
+				<aside class="notes">Where I come from is not where others come from</aside>
+			</section>
+			<section>
+				<h2>Would I do it again?</h2>
+				<p class="fragment">YES</p>
+			</section>
+			<section>
+				<h2>Links</h2>
+				<p><a href="https://github.com/scummvm/scummvm">Scummvm github</a></p>
+				<p><a href="https://john.scummvm.org">Buildbot</a></p>
+				<p><a href="https://github.com/scummvm/scummvm-sites/tree/director-buildbot">Buildbot code</a></p>
+			</section>
 		</div>
+	</div>
 
-		<script src="dist/reveal.js"></script>
-		<script src="plugin/notes/notes.js"></script>
-		<script src="plugin/markdown/markdown.js"></script>
-		<script src="plugin/highlight/highlight.js"></script>
-		<script>
-			// More info about initialization & config:
-			// - https://revealjs.com/initialization/
-			// - https://revealjs.com/config/
-			Reveal.initialize({
-				hash: true,
+	<script src="dist/reveal.js"></script>
+	<script src="plugin/notes/notes.js"></script>
+	<script src="plugin/markdown/markdown.js"></script>
+	<script src="plugin/highlight/highlight.js"></script>
+	<script>
+		// More info about initialization & config:
+		// - https://revealjs.com/initialization/
+		// - https://revealjs.com/config/
+		Reveal.initialize({
+			hash: true,
 
-				// Learn about plugins: https://revealjs.com/plugins/
-				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
-			});
-		</script>
-	</body>
+			// Learn about plugins: https://revealjs.com/plugins/
+			plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+		});
+	</script>
+</body>
+
 </html>
